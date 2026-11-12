@@ -508,10 +508,9 @@ function renderNew(){
         <div class="scores" role="group" aria-label="ציון 1 עד 10">${Array.from({length:10},(_,k)=>`<button type="button" data-s="${k+1}" aria-pressed="${draft.score===k+1}">${k+1}</button>`).join('')}</div>
       </div>
     </section>
-    <section class="sec"><h2>פרטים</h2>
+    <section class="sec"><h2>תאריך</h2>
       <div class="card rows">
-        <div class="rowf"><label for="f-date">תאריך</label><input id="f-date" type="date" value="${esc(draft.date)}" max="${today()}"></div>
-        <div class="rowf"><label for="f-min">משך בדקות</label><input id="f-min" type="number" inputmode="numeric" min="1" max="300" placeholder="35" value="${esc(draft.minutes)}"></div>
+        <div class="rowf"><label for="f-date">תאריך התספורת</label><input id="f-date" type="date" value="${esc(draft.date)}" max="${today()}"></div>
       </div>
     </section>
     <section class="sec"><h2><label for="f-notes">הערות לפעם הבאה</label></h2>
@@ -532,8 +531,8 @@ function renderNew(){
     const r=$view.querySelector('.score-read'); r.querySelector('b').firstChild.textContent=draft.score; r.querySelector('span').textContent=SCORE_WORDS[draft.score];
     const m=$view.querySelector('.msg'); if(m) m.remove();
   });
-  const d=$view.querySelector('#f-date'), m=$view.querySelector('#f-min'), t=$view.querySelector('#f-notes');
-  d.oninput=()=>draft.date=d.value; m.oninput=()=>draft.minutes=m.value; t.oninput=()=>draft.notes=t.value;
+  const d=$view.querySelector('#f-date'), t=$view.querySelector('#f-notes');
+  d.oninput=()=>draft.date=d.value; t.oninput=()=>draft.notes=t.value;
   $view.querySelector('#save').onclick=save;
 }
 

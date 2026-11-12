@@ -1,5 +1,5 @@
 // Keeps the app available offline: pages are fetched fresh when online and served from the cache when not.
-const C = 'self-barber-c3c9134a';
+const C = 'self-barber-7a649cfb';
 const PRE = ['./', './1/', './2/', './1/manifest.webmanifest', './2/manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png',
   'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', 'https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap'];
 self.addEventListener('install', e => {
