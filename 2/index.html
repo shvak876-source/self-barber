@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>הספר של עצמי</title>
+<meta name="theme-color" content="#08090b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>html{padding-top:env(safe-area-inset-top,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<script>window.PROFILE_LINKS=true</script>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: phone app in chrome and glass. Graphite studio ground with one cool spotlight, frosted glass cards with bright edges, polished-metal type and buttons, a large true-3D barber pole as the hero. One deliberate dark look. */
+:root{
+  color-scheme:dark;
+  --bg:#08090b; --ink:#f4f6f9; --muted:#98a0ad; --line:rgba(255,255,255,.14); --fill:rgba(255,255,255,.07);
+  --ice:#bfe0ff;
+  --chrome:linear-gradient(180deg,#ffffff 0%,#dfe4ea 30%,#8c94a1 52%,#c9cfd8 58%,#f4f6f9 100%);
+  --chrome-text:linear-gradient(180deg,#ffffff 12%,#cfd6df 46%,#7f8896 54%,#e9edf2 88%);
+  --good:#4ade80; --warn:#fbbf24; --bad:#ff6b7a; --pill-ink:#0b0b10;
+  --f:"Heebo",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Arial,sans-serif;
+  --r:24px;
+}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.45;direction:rtl;-webkit-font-smoothing:antialiased;min-height:100%;isolation:isolate}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(90% 46% at 50% -6%,rgba(190,215,255,.26),transparent 70%),radial-gradient(60% 30% at 50% 108%,rgba(160,180,210,.14),transparent 70%)}
+*{box-sizing:border-box}
+.app{position:relative;max-width:520px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px calc(100px + env(safe-area-inset-bottom,0px))}
+h1,h2{margin:0;font-weight:800;line-height:1.15;letter-spacing:-.01em;text-wrap:balance}
+h1{font-size:2.1rem;background:var(--chrome-text);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:3px}
+h2{font-size:1.2rem;font-weight:700}
+p{margin:0}
+.muted{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--ice);outline-offset:2px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.between{justify-content:space-between}
+.card{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.13),rgba(255,255,255,.03) 42%,rgba(255,255,255,.06));border:1px solid var(--line);border-radius:var(--r);padding:16px;-webkit-backdrop-filter:blur(24px) saturate(140%);backdrop-filter:blur(24px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(255,255,255,.04),0 18px 44px rgba(0,0,0,.5)}
+.btn{border:0;border-radius:18px;padding:12px 20px;background:var(--chrome);color:#0b0d11;font-weight:800;font-size:1.05rem;display:inline-flex;align-items:center;justify-content:center;min-height:56px;text-decoration:none;box-shadow:inset 0 1px 0 #fff,inset 0 -2px 3px rgba(0,0,0,.25),0 0 0 1px rgba(255,255,255,.25),0 10px 34px rgba(190,220,255,.35)}
+.btn.ghost{background:var(--fill);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line);font-weight:700}
+.btn.danger{background:var(--bad);color:var(--pill-ink);box-shadow:none}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.wide{width:100%}
+.label{font-size:.85rem;color:var(--muted);font-weight:500}
+.mode{font-size:.85rem;background:var(--fill);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:14px}
+
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.top>div{flex:none;max-width:100%}
+.top h1{white-space:nowrap}
+.who{flex:0 1 auto;min-width:0;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--fill);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:.9rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+.who span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who svg{width:18px;height:18px;flex:none}
+.prof{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;padding:12px;border-radius:18px;border:1px solid var(--line);background:rgba(0,0,0,.2)}
+.prof.on{border-color:var(--ice);box-shadow:0 0 0 1px var(--ice),0 0 22px rgba(190,220,255,.25)}
+.prof .btn{min-height:46px;padding:8px 16px;font-size:.95rem;border-radius:14px}
+
+/* hero: 3D pole + savings */
+.hero{padding:6px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:6px;overflow:hidden;text-align:center}
+.hero::before{content:"";position:absolute;inset:0 0 auto;height:330px;background:radial-gradient(52% 50% at 50% 46%,rgba(190,220,255,.22),transparent 72%);pointer-events:none}
+.pole-slot{position:relative;width:100%;height:330px;touch-action:pan-y;cursor:grab}
+.pole-slot canvas{position:absolute;inset:0;width:100%;height:100%;display:block;filter:drop-shadow(0 0 22px rgba(190,220,255,.28))}
+.pole-slot.off{height:0}
+.amount{font-size:3.6rem;font-weight:800;line-height:1;letter-spacing:-.03em;direction:ltr;background:var(--chrome-text);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px rgba(190,220,255,.45));padding-block:2px 4px}
+.amount span{font-size:1.9rem;font-weight:700;margin-right:3px}
+.bar{width:100%;max-width:300px;height:10px;border-radius:999px;background:rgba(255,255,255,.08);box-shadow:inset 0 1px 2px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.1);margin-block:8px 6px;overflow:hidden;direction:ltr}
+.bar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#8ea0b8,#eaf3ff 70%,#fff);box-shadow:0 0 14px rgba(190,220,255,.95);transition:width 1.3s cubic-bezier(.3,.8,.3,1)}
+.ring-foot{font-size:.95rem;color:var(--muted)}
+.ring-foot b{color:#fff;font-weight:800}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{padding:14px 8px;text-align:center;min-width:0;border-radius:20px}
+.stat b{display:block;font-size:1.8rem;font-weight:800;line-height:1.1;background:var(--chrome-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:.8rem;color:var(--muted)}
+.trend{display:inline-block;font-size:.9rem;padding:3px 10px;border-radius:999px;font-weight:700}
+.trend.up{background:rgba(74,222,128,.15);color:var(--good);box-shadow:0 0 14px rgba(74,222,128,.25)}
+.trend.down{background:rgba(255,107,122,.15);color:var(--bad)}
+.trend.flat{background:var(--fill);color:var(--muted)}
+
+/* new haircut form */
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.slot{position:relative}
+.shot{aspect-ratio:3/4;max-width:100%;border-radius:16px;background:var(--fill);border:1px dashed rgba(255,255,255,.24);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;position:relative;overflow:hidden;color:var(--muted);font-size:.9rem;cursor:pointer}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shot svg{width:28px;height:28px;color:#e3ebf5}
+.rm{position:absolute;top:6px;left:6px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:17px;line-height:1;padding:0}
+.scores{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;direction:ltr}
+.scores button{aspect-ratio:1;border:0;background:var(--fill);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);border-radius:10px;font-weight:700;padding:0;min-width:0;font-variant-numeric:tabular-nums}
+.scores button[aria-pressed="true"]{background:var(--chrome);color:#0b0d11;box-shadow:inset 0 1px 0 #fff,0 0 18px rgba(190,220,255,.8)}
+.scale-hint{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);direction:ltr}
+.field{display:flex;flex-direction:column;gap:8px}
+.field input,.field textarea{background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:14px;padding:12px;width:100%;min-width:0}
+.field input:focus,.field textarea:focus{outline:0;border-color:var(--ice);box-shadow:0 0 0 3px rgba(190,220,255,.25)}
+.field textarea{min-height:88px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.two .field{min-width:0}
+.msg{font-size:.95rem;border-radius:14px;padding:10px 12px}
+.msg.err{background:rgba(255,107,122,.14);color:var(--bad)}
+
+/* progress */
+.chart{width:100%;display:block;overflow:visible}
+.chart .ln{filter:drop-shadow(0 0 6px rgba(190,220,255,.8))}
+.legend{font-size:.85rem;gap:16px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.compare figure{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}
+.compare img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:16px;background:var(--fill);cursor:zoom-in;border:1px solid var(--line)}
+.compare figcaption{font-size:.85rem;color:var(--muted);display:flex;justify-content:space-between;gap:6px}
+.compare figcaption b{color:var(--ink)}
+
+/* history */
+.cut{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:start}
+.thumb{width:76px;aspect-ratio:3/4;border-radius:14px;object-fit:cover;background:var(--fill);display:block;border:1px solid var(--line)}
+.thumbbtn{padding:0;border:0;background:none;border-radius:14px}
+.cut .body{min-width:0;display:flex;flex-direction:column;gap:4px}
+.pill{font-weight:700;border-radius:999px;padding:2px 10px;font-variant-numeric:tabular-nums;color:var(--pill-ink);font-size:.9rem;white-space:nowrap}
+.cut p{overflow-wrap:anywhere}
+.cut .more{display:flex;gap:6px;overflow-x:auto}
+.cut .more img{width:52px;aspect-ratio:3/4;object-fit:cover;border-radius:8px;cursor:zoom-in;flex:none}
+.linkbtn{background:none;border:0;color:var(--bad);padding:4px 0;font-size:.9rem;align-self:flex-start}
+.confirm{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.95rem}
+.confirm .btn{min-height:38px;padding:6px 14px;border-radius:10px;font-size:.95rem}
+.empty{text-align:center;padding:26px 18px;align-items:center}
+
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;z-index:50;padding:max(16px,env(safe-area-inset-top,0px)) 16px}
+.lb img{max-width:100%;max-height:100%;border-radius:10px}
+
+/* tab bar */
+nav.tabs{position:fixed;inset:auto 0 0 0;background:rgba(14,15,19,.7);-webkit-backdrop-filter:blur(24px) saturate(140%);backdrop-filter:blur(24px) saturate(140%);border-top:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.12);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);z-index:20}
+nav.tabs .in{display:grid;grid-template-columns:repeat(4,1fr);width:100%;max-width:520px}
+nav.tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px 7px;color:var(--muted);text-decoration:none;font-size:.72rem;font-weight:500}
+nav.tabs a svg{width:25px;height:25px}
+nav.tabs a[aria-current="page"]{color:#fff}
+nav.tabs a[aria-current="page"] svg{filter:drop-shadow(0 0 8px rgba(190,220,255,.95))}
+</style>
+
+<div class="app" dir="rtl">
+  <header class="top">
+    <div><div class="label" id="today"></div><h1>הספר של עצמי</h1></div>
+    <a id="who" class="who" href="#profile" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.500 2 8 6"/></svg><span id="who-name"></span></a>
+  </header>
+  <div id="mode" class="mode" hidden></div>
+  <main id="view" class="stack" style="margin-top:16px"></main>
+</div>
+
+<nav class="tabs" aria-label="ניווט">
+  <div class="in">
+    <a href="#home" data-v="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>בית</a>
+    <a href="#new" data-v="new"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>תספורת חדשה</a>
+    <a href="#progress" data-v="progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 16l4-5 4 3 6-8"/></svg>התקדמות</a>
+    <a href="#history" data-v="history"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>היסטוריה</a>
+  </div>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const PRICE = 60;
+const MILESTONE = 600;
+const $view = document.getElementById('view');
+const state = { cuts: [], loading: true, backend: null, error: '' };
+let draft = { photos: [null, null, null], score: 0, date: today(), minutes: '', notes: '' };
+let pendingDelete = null;
+
+function today(){ const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
+function esc(s){ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmtDate(iso){ try{ return new Date(iso+'T12:00:00').toLocaleDateString('he-IL',{day:'numeric',month:'short',year:'numeric'}); }catch{ return iso; } }
+function shekel(n){ return n.toLocaleString('he-IL'); }
+function scoreColor(s){ return s>=8?'var(--good)':s>=5?'var(--warn)':'var(--bad)'; }
+function photoSrc(p){ return p ? (p.id ? '/_blob/'+p.id : p.data) : ''; }
+function sorted(){ return [...state.cuts].sort((a,b)=> (a.date||'').localeCompare(b.date||'') || (a.createdAt||0)-(b.createdAt||0)); }
+try{ document.getElementById('today').textContent=new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'}); }catch{}
+
+/* ---------- storage ---------- */
+// Cloud: db (private per person) + assets for photos. Fallback: this browser only.
+// Profiles: two people, each with their own haircuts. Which profile is active is remembered per device.
+const PKEY='self-barber-profile';
+let prof={active:null,names:{p1:'',p2:''}};
+try{ const v=JSON.parse(localStorage.getItem(PKEY)); if(v&&v.names) prof={active:v.active||null,names:{p1:v.names.p1||'',p2:v.names.p2||''}}; }catch{}
+// On the website each person has their own link (…/1/ or …/2/); the link decides the profile.
+const FORCED=(location.pathname.match(/\/([12])\/(?:index\.html)?$/)||[])[1]||null;
+if(FORCED) prof.active='p'+FORCED;
+const LINKS=!!window.PROFILE_LINKS&&!FORCED;
+function saveProf(){ try{ localStorage.setItem(PKEY,JSON.stringify(prof)); }catch{} updateWho(); }
+function updateWho(){
+  const w=document.getElementById('who'); if(!w) return;
+  w.hidden = state.backend!==local;
+  document.getElementById('who-name').textContent = prof.active ? (prof.names[prof.active]||('פרופיל '+(prof.active==='p1'?1:2))) : 'פרופיל';
+}
+// On-device storage (IndexedDB): photos are kept as image blobs on this phone only.
+const local = {
+  db:null, urls:[],
+  open(){ return new Promise((res,rej)=>{ const r=indexedDB.open('self-barber',1); r.onupgradeneeded=()=>r.result.createObjectStore('cuts',{keyPath:'id'}); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }); },
+  tx(mode,fn){ return new Promise((res,rej)=>{ const t=this.db.transaction('cuts',mode); const q=fn(t.objectStore('cuts')); t.oncomplete=()=>res(q&&q.result); t.onerror=t.onabort=()=>rej(t.error); }); },
+  async init(){ this.db=await this.open(); await this.reload(); },
+  async reload(){
+    this.urls.forEach(u=>URL.revokeObjectURL(u)); this.urls=[];
+    const all=await this.tx('readonly',st=>st.getAll());
+    state.cuts=(all||[]).filter(c=>c.profile===prof.active).map(c=>({...c,photos:(c.photos||[]).map(p=>{ if(!p||!p.blob) return null; const u=URL.createObjectURL(p.blob); this.urls.push(u); return {data:u}; })}));
+    state.loading=false; state.error=''; render();
+  },
+  async add(cut){ cut.id='c'+Date.now(); cut.profile=prof.active; await this.tx('readwrite',st=>st.put(cut)); await this.reload(); },
+  async remove(cut){ await this.tx('readwrite',st=>st.delete(cut.id)); await this.reload(); },
+  async uploadPhoto(file){ return { blob: await compress(file,1400,.85) }; }
+};
+function blobToDataURL(b){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(b); }); }
+async function compress(file,max,q){
+  let src;
+  try{ src = await createImageBitmap(file,{imageOrientation:'from-image'}); }
+  catch{ src = await new Promise((res,rej)=>{ const i=new Image(); i.onload=()=>res(i); i.onerror=rej; i.src=URL.createObjectURL(file); }); }
+  const w=src.width,h=src.height,k=Math.min(1,max/Math.max(w,h));
+  const c=document.createElement('canvas'); c.width=Math.round(w*k); c.height=Math.round(h*k);
+  c.getContext('2d').drawImage(src,0,0,c.width,c.height);
+  return await new Promise(res=>c.toBlob(res,'image/jpeg',q));
+}
+
+async function initCloud(){
+  if(!window.claude?.use) return null;
+  const [db,user,assets] = await Promise.all([claude.use('db'),claude.use('user'),claude.use('assets')]);
+  if(!db || !user || !assets) return null;
+  const uid = await user.id();
+  if(!uid) return null;
+  const col = db.collection('data/users/'+uid+'/cuts');
+  return {
+    subscribe(){
+      const t=setTimeout(()=>{ if(state.loading){ state.loading=false; state.error='הטעינה לוקחת יותר מדי זמן. בדוק את החיבור ופתח שוב.'; render(); } },10000);
+      col.onSnapshot(s=>{ clearTimeout(t); state.loading=false; state.error=''; state.cuts=s.docs.map(d=>({id:d.id,...d.data()})); render(); },
+        e=>{ clearTimeout(t); state.loading=false; state.error='לא הצלחתי לטעון את התספורות ('+e.code+').'; render(); });
+    },
+    async add(cut){ await col.add(cut); },
+    async remove(cut){
+      await col.doc(cut.id).delete();
+      for(const p of cut.photos||[]) if(p?.id){ try{ await assets.delete(p.id); }catch{} }
+    },
+    async uploadPhoto(file){ const blob=await compress(file,1400,.85); const r=await assets.upload(blob); return { id:r.id }; }
+  };
+}
+
+/* ---------- 3D barber pole (WebGL) ---------- */
+// One persistent renderer; its canvas is re-parented into the home hero on each render. Falls back to no pole if WebGL or the library is unavailable.
+let P3=null;
+function buildPole(){
+  const T=window.THREE; if(!T) return false;
+  const cv=document.createElement('canvas');
+  const r=new T.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
+  r.setPixelRatio(Math.min(2,window.devicePixelRatio||1));
+  r.outputEncoding=T.sRGBEncoding; r.toneMapping=T.ACESFilmicToneMapping; r.toneMappingExposure=1.2;
+  const scene=new T.Scene();
+  const cam=new T.PerspectiveCamera(30,1,.1,60); cam.position.set(0,1.1,12.8); cam.lookAt(0,.22,0);
+
+  // studio environment for the chrome: dark room with soft light panels
+  const ec=document.createElement('canvas'); ec.width=1024; ec.height=512; const eg=ec.getContext('2d');
+  const bg=eg.createLinearGradient(0,0,0,512); bg.addColorStop(0,'#c4ccd8'); bg.addColorStop(.42,'#565c68'); bg.addColorStop(.56,'#14161a'); bg.addColorStop(1,'#6b727e');
+  eg.fillStyle=bg; eg.fillRect(0,0,1024,512);
+  const box=(x,y,w,h,c)=>{ eg.filter='blur(10px)'; eg.fillStyle=c; eg.fillRect(x,y,w,h); eg.filter='none'; };
+  box(40,90,200,260,'#ffffff'); box(540,60,280,170,'#ffffff'); box(320,130,60,270,'#ffffff'); box(850,150,120,230,'#e6f0ff'); box(0,0,1024,70,'#ffffff');
+  box(470,330,60,60,'#ff6a80'); box(930,60,60,60,'#6aa0ff');
+  const et=new T.CanvasTexture(ec); et.mapping=T.EquirectangularReflectionMapping; et.encoding=T.sRGBEncoding;
+  const pm=new T.PMREMGenerator(r); scene.environment=pm.fromEquirectangular(et).texture; et.dispose();
+
+  const chrome=new T.MeshStandardMaterial({color:0xffffff,metalness:1,roughness:.1,envMapIntensity:1.5});
+  const g=new T.Group(); scene.add(g);
+  const cyl=(rt,rb,h,y,m,seg)=>{ const o=new T.Mesh(new T.CylinderGeometry(rt,rb,h,seg||64,1),m); o.position.y=y; g.add(o); return o; };
+
+  // helical stripes: red / white / blue, seamless around the circumference
+  const N=512, sc=document.createElement('canvas'); sc.width=sc.height=N; const sg=sc.getContext('2d');
+  sg.fillStyle='#ffffff'; sg.fillRect(0,0,N,N);
+  const half=N/2, bw=half/4;
+  for(let k=-4;k<8;k++){ [['#e0193f',0],['#1f55e0',2]].forEach(([col,o])=>{ const x0=k*half+o*bw; sg.fillStyle=col; sg.beginPath(); sg.moveTo(x0,0); sg.lineTo(x0+bw,0); sg.lineTo(x0+bw-N,N); sg.lineTo(x0-N,N); sg.closePath(); sg.fill(); }); }
+  const st=new T.CanvasTexture(sc); st.wrapS=st.wrapT=T.RepeatWrapping; st.encoding=T.sRGBEncoding; st.anisotropy=r.capabilities.getMaxAnisotropy();
+  const Rr=.66, H=3.5; st.repeat.set(1,H/(2*Math.PI*Rr));
+  const stripes=cyl(Rr,Rr,H,0,new T.MeshStandardMaterial({map:st,roughness:.3,metalness:0,emissive:0xffffff,emissiveMap:st,emissiveIntensity:.32}),96);
+  cyl(.78,.78,H,0,new T.MeshPhysicalMaterial({color:0xffffff,metalness:0,roughness:0,transparent:true,opacity:.2,clearcoat:1,clearcoatRoughness:0,envMapIntensity:2.2,depthWrite:false}),96);
+
+  // chrome hardware
+  [1,-1].forEach(sgn=>{ cyl(.9,.9,.36,sgn*(H/2+.18),chrome); cyl(.98,.98,.09,sgn*(H/2+.02),chrome); cyl(.98,.98,.09,sgn*(H/2+.34),chrome); });
+  cyl(.5,.74,.2,H/2+.48,chrome);
+  const dome=new T.Mesh(new T.SphereGeometry(.56,48,32),new T.MeshStandardMaterial({color:0xffffff,roughness:.08,metalness:0,emissive:0xcfe2ff,emissiveIntensity:.28})); dome.position.y=H/2+.98; g.add(dome);
+  cyl(.74,.3,.42,-(H/2+.57),chrome);
+  const fin=new T.Mesh(new T.SphereGeometry(.24,32,24),chrome); fin.position.y=-(H/2+.88); g.add(fin);
+
+  // orbit meter: dim chrome track + glowing arc for the saved share
+  const orbit=new T.Group(); orbit.rotation.x=Math.PI/2-.42; orbit.rotation.y=.12; scene.add(orbit);
+  const OR=2.35;
+  orbit.add(new T.Mesh(new T.TorusGeometry(OR,.03,12,160),new T.MeshStandardMaterial({color:0x8d96a5,metalness:1,roughness:.25})));
+  const glow=new T.MeshBasicMaterial({color:0xe6f2ff});
+  const arc=new T.Mesh(new T.BufferGeometry(),glow); orbit.add(arc);
+  const head=new T.Mesh(new T.SphereGeometry(.13,24,16),new T.MeshBasicMaterial({color:0xffffff})); orbit.add(head);
+  scene.add(new T.DirectionalLight(0xffffff,.5));
+
+  const S={cv,r,scene,cam,g,stripes,head,frac:-1,yaw:0,pitch:0,w:0,h:0,raf:0,
+    setFrac(f){ if(f===S.frac) return; S.frac=f; arc.geometry.dispose(); arc.visible=head.visible=f>0;
+      if(f>0){ arc.geometry=new T.TorusGeometry(OR,.06,16,Math.max(8,Math.round(180*f)),Math.PI*2*f); arc.rotation.z=-Math.PI/2; const a=-Math.PI/2+Math.PI*2*f; head.position.set(OR*Math.cos(a),OR*Math.sin(a),0); } },
+    size(){ const p=cv.parentElement; if(!p) return; const w=p.clientWidth,h=p.clientHeight; if(!w||!h||(w===S.w&&h===S.h)) return; S.w=w; S.h=h; r.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); },
+    frame(t){ S.size(); const s=t/1000;
+      stripes.rotation.y=-s*1.1;
+      S.yaw*=.94; S.pitch*=.94;
+      g.rotation.set(.1+S.pitch, Math.sin(s*.45)*.3+S.yaw, -.2+Math.sin(s*.3)*.03);
+      head.scale.setScalar(1+Math.sin(s*3)*.18);
+      r.render(scene,cam); }
+  };
+  let drag=null;
+  cv.addEventListener('pointerdown',e=>{ drag={x:e.clientX,y:e.clientY}; });
+  window.addEventListener('pointermove',e=>{ if(!drag) return; S.yaw+=(e.clientX-drag.x)*.012; S.pitch+=(e.clientY-drag.y)*.004; S.pitch=Math.max(-.5,Math.min(.5,S.pitch)); drag={x:e.clientX,y:e.clientY}; });
+  window.addEventListener('pointerup',()=>{ drag=null; });
+  return S;
+}
+function mountPole(frac){
+  const slot=document.getElementById('pole-slot'); if(!slot) return;
+  if(P3===null){ try{ P3=buildPole(); }catch(e){ P3=false; } }
+  if(!P3){ slot.classList.add('off'); return; }
+  slot.appendChild(P3.cv); P3.w=0; P3.setFrac(frac);
+  const still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  cancelAnimationFrame(P3.raf);
+  const loop=t=>{ if(!P3.cv.isConnected) return; P3.frame(still?0:t); if(!still) P3.raf=requestAnimationFrame(loop); };
+  P3.raf=requestAnimationFrame(loop);
+}
+
+/* ---------- routing ---------- */
+const VIEWS=['home','new','progress','history','profile'];
+function current(){ const h=location.hash.slice(1); return VIEWS.includes(h)?h:'home'; }
+window.addEventListener('hashchange',()=>{ render(); window.scrollTo(0,0); });
+
+function render(){
+  const v=current();
+  document.querySelectorAll('nav.tabs a').forEach(a=>{ if(a.dataset.v===v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  if(state.backend===local && !state.error && (v==='profile' || !prof.active || LINKS)) return renderProfile();
+  if(v==='profile'){ location.hash='#home'; return; }
+  if(v==='new') return renderNew();
+  if(state.loading){ $view.innerHTML='<div class="card empty muted">טוען את התספורות שלך…</div>'; return; }
+  if(state.error){ $view.innerHTML='<div class="msg err">'+esc(state.error)+'</div>'; return; }
+  ({home:renderHome,progress:renderProgress,history:renderHistory})[v]();
+}
+function bindZoom(){ $view.querySelectorAll('[data-zoom]').forEach(b=>b.onclick=()=>zoom(b.dataset.zoom)); }
+
+/* ---------- home ---------- */
+function stats(){
+  const s=sorted(), n=s.length, total=n*PRICE;
+  const avg=n? s.reduce((a,c)=>a+c.score,0)/n : 0;
+  let trend=null;
+  if(n>=2){
+    const k=Math.max(1,Math.min(3,Math.floor(n/2)));
+    const first=s.slice(0,k).reduce((a,c)=>a+c.score,0)/k;
+    const last=s.slice(-k).reduce((a,c)=>a+c.score,0)/k;
+    trend={diff:last-first,k};
+  }
+  let days=null;
+  if(n>=2){ const d=(new Date(s[n-1].date)-new Date(s[0].date))/864e5; days=Math.round(d/(n-1)); }
+  return {s,n,total,avg,trend,days};
+}
+
+function ringHTML(total,top){
+  const R=94, C=2*Math.PI*R, frac=Math.min(1,total/top);
+  return `<div class="ring" role="img" aria-label="חסכת ${shekel(total)} שקלים מתוך ${shekel(top)}">
+    <svg viewBox="0 0 220 220"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff2d55"/><stop offset=".55" stop-color="#8a5cff"/><stop offset="1" stop-color="#2f7bff"/></linearGradient></defs><circle class="track" cx="110" cy="110" r="${R}" fill="none" stroke-width="20"/>
+      ${frac>0?`<circle class="prog" cx="110" cy="110" r="${R}" fill="none" stroke-width="20" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${C.toFixed(1)}" data-off="${(C*(1-frac)).toFixed(1)}"/>`:''}
+    </svg>
+    <div class="mid"><div class="label">חסכתי</div><div class="amount num"><span>₪</span>${shekel(total)}</div><div class="label num">מתוך ₪${shekel(top)}</div></div>
+  </div>`;
+}
+
+function renderHome(){
+  const {s,n,total,avg,trend,days}=stats();
+  const top=Math.max(MILESTONE,Math.ceil((total+1)/MILESTONE)*MILESTONE);
+  const left=(top-total)/PRICE;
+  const last=s[n-1];
+  let trendHtml='';
+  if(trend){
+    const d=trend.diff, cls=d>0.25?'up':d<-0.25?'down':'flat';
+    const txt= cls==='up'?`עלייה של ${d.toFixed(1)} נק׳`: cls==='down'?`ירידה של ${Math.abs(d).toFixed(1)} נק׳`:'ציון יציב';
+    trendHtml=`<div class="card row between"><span class="muted" style="font-size:.9rem;flex:1;min-width:0">${trend.k===1?'התספורת האחרונה לעומת הראשונה':`${trend.k} התספורות האחרונות לעומת ${trend.k} הראשונות`}</span><span class="trend ${cls}">${txt}</span></div>`;
+  }
+  $view.innerHTML=`
+    <section class="card hero" aria-label="מד החיסכון">
+      <div id="pole-slot" class="pole-slot" role="img" aria-label="עמוד מספרה תלת־ממדי. הטבעת שמקיפה אותו מתמלאת לפי החיסכון"></div>
+      <div class="label">חסכתי</div>
+      <div class="amount num"><span>₪</span>${shekel(total)}</div>
+      <div class="bar" role="img" aria-label="${shekel(total)} מתוך ${shekel(top)} שקלים"><i data-w="${(Math.min(1,total/top)*100).toFixed(1)}"></i></div>
+      <div class="ring-foot num">${n? `${n} תספורות × ${PRICE} ₪ · עוד <b>${left}</b> ליעד של ${shekel(top)} ₪` : `כל תספורת בבית מוסיפה ${PRICE} ₪`}</div>
+    </section>
+    <div class="stats">
+      <div class="card stat"><b class="num">${n}</b><span>תספורות</span></div>
+      <div class="card stat"><b class="num">${n?avg.toFixed(1):'–'}</b><span>ציון ממוצע</span></div>
+      <div class="card stat"><b class="num">${days??'–'}</b><span>ימים בין תספורות</span></div>
+    </div>
+    ${trendHtml}
+    ${last? `<section class="card stack" style="gap:12px">
+        <div class="row between"><h2>התספורת האחרונה</h2><span class="pill" style="background:${scoreColor(last.score)}">${last.score}/10</span></div>
+        <div class="cut">${thumb(last)}<div class="body"><span class="muted">${fmtDate(last.date)}${last.minutes?` · ${last.minutes} דק׳`:''}</span>${last.notes?`<p>${esc(last.notes)}</p>`:''}</div></div>
+      </section>`
+      : `<section class="card empty stack"><h2>עוד אין תספורות</h2><p class="muted">צלם את התספורת מקדימה, מהצד ומאחורה ותן לה ציון. כל פעם תראה כמה השתפרת.</p><a class="btn" href="#new">הוסף תספורת ראשונה</a></section>`}
+  `;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ const p=$view.querySelector('.bar i'); if(p) p.style.width=p.dataset.w+'%'; }));
+  bindZoom(); mountPole(Math.min(1,total/top));
+}
+function thumb(c){
+  const p=(c.photos||[]).find(Boolean);
+  return p? `<button class="thumbbtn" data-zoom="${esc(photoSrc(p))}" aria-label="הגדל תמונה"><img class="thumb" src="${esc(photoSrc(p))}" alt="תספורת ${fmtDate(c.date)}" loading="lazy"></button>`
+          : `<div class="thumb" aria-hidden="true"></div>`;
+}
+
+/* ---------- new ---------- */
+const ANGLES=['מקדימה','מהצד','מאחורה'];
+const camIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+let saving=false, formMsg=null;
+
+function renderNew(){
+  $view.innerHTML=`
+    <section class="card stack">
+      <div class="field"><span class="label">תמונות</span>
+        <div class="shots">${ANGLES.map((a,i)=>{
+          const p=draft.photos[i];
+          return `<div class="slot">
+            <label class="shot" for="ph${i}">${p?`<img src="${esc(p.preview)}" alt="${a}">`:camIcon+a}</label>
+            ${p?`<button class="rm" type="button" data-rm="${i}" aria-label="הסר תמונה ${a}">×</button>`:''}
+            <input id="ph${i}" type="file" accept="image/*" hidden data-i="${i}">
+          </div>`;}).join('')}
+        </div>
+      </div>
+    </section>
+    <section class="card stack">
+      <div class="field"><span class="label">כמה טובה יצאה התספורת?</span>
+        <div class="scores" role="group" aria-label="ציון 1 עד 10">${Array.from({length:10},(_,k)=>`<button type="button" data-s="${k+1}" aria-pressed="${draft.score===k+1}">${k+1}</button>`).join('')}</div>
+        <div class="scale-hint"><span>צריך כובע</span><span>כמו במספרה</span></div>
+      </div>
+    </section>
+    <section class="card stack">
+      <div class="two">
+        <div class="field"><label class="label" for="f-date">תאריך</label><input id="f-date" type="date" value="${esc(draft.date)}" max="${today()}"></div>
+        <div class="field"><label class="label" for="f-min">משך בדקות</label><input id="f-min" type="number" inputmode="numeric" min="1" max="300" placeholder="35" value="${esc(draft.minutes)}"></div>
+      </div>
+      <div class="field"><label class="label" for="f-notes">מה עבד ומה לשפר בפעם הבאה</label>
+        <textarea id="f-notes" placeholder="למשל: הפייד בצד שמאל יצא גבוה מדי">${esc(draft.notes)}</textarea></div>
+    </section>
+    ${formMsg?`<div class="msg ${formMsg.t}">${esc(formMsg.m)}</div>`:''}
+    <button id="save" class="btn wide" type="button" ${saving||!state.backend?'disabled':''}>${saving?'שומר…':'שמור תספורת'}</button>`;
+  $view.querySelectorAll('input[type=file]').forEach(inp=>inp.onchange=()=>{
+    const f=inp.files[0]; if(!f) return;
+    const i=+inp.dataset.i; if(draft.photos[i]) URL.revokeObjectURL(draft.photos[i].preview);
+    draft.photos[i]={file:f,preview:URL.createObjectURL(f)}; formMsg=null; renderNew();
+  });
+  $view.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{ const i=+b.dataset.rm; URL.revokeObjectURL(draft.photos[i].preview); draft.photos[i]=null; renderNew(); });
+  $view.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{ draft.score=+b.dataset.s; formMsg=null; renderNew(); });
+  const d=$view.querySelector('#f-date'), m=$view.querySelector('#f-min'), t=$view.querySelector('#f-notes');
+  d.oninput=()=>draft.date=d.value; m.oninput=()=>draft.minutes=m.value; t.oninput=()=>draft.notes=t.value;
+  $view.querySelector('#save').onclick=save;
+}
+
+async function save(){
+  if(!draft.score){ formMsg={t:'err',m:'בחר ציון מ-1 עד 10 לפני השמירה.'}; return renderNew(); }
+  if(!draft.date){ formMsg={t:'err',m:'בחר תאריך.'}; return renderNew(); }
+  saving=true; formMsg=null; renderNew();
+  try{
+    const photos=[];
+    for(let i=0;i<3;i++){ const p=draft.photos[i]; photos.push(p? await state.backend.uploadPhoto(p.file) : null); }
+    const mins=parseInt(draft.minutes,10);
+    await state.backend.add({ date:draft.date, score:draft.score, minutes: mins>0?mins:null, notes:draft.notes.trim().slice(0,2000), photos, createdAt:Date.now() });
+    draft.photos.forEach(p=>p&&URL.revokeObjectURL(p.preview));
+    draft={ photos:[null,null,null], score:0, date:today(), minutes:'', notes:'' };
+    saving=false; location.hash='#home';
+  }catch(e){
+    saving=false;
+    const code=e?.name==='QuotaExceededError'?'quota':(e?.code||e?.message||'');
+    formMsg={t:'err',m: code==='quota'||code==='quota_or_state' ? 'אין מספיק מקום לתמונות. מחק תספורות ישנות או הוסף פחות תמונות.' : code==='too_large' ? 'התמונה גדולה מדי. נסה תמונה אחרת.' : 'השמירה נכשלה. בדוק את החיבור ולחץ שוב על שמור.'};
+    renderNew();
+  }
+}
+
+/* ---------- profiles ---------- */
+function renderProfile(){
+  const keys=FORCED?['p'+FORCED]:['p1','p2'];
+  $view.innerHTML=`<section class="card stack"><h2>${FORCED?'השם שלך':'מי מסתפר?'}</h2>
+    <p class="muted">${FORCED?'התספורות והחיסכון שלך נשמרים רק בטלפון הזה.':LINKS?'לכל אחד יש קישור משלו. בחר פרופיל, ושמור את הקישור שנפתח במסך הבית של הטלפון.':'לכל פרופיל יש תספורות וחיסכון משלו. הכול נשמר רק בטלפון הזה.'}</p>
+    ${keys.map(k=>{ const i=k==='p1'?0:1, on=prof.active===k&&!LINKS; return `<div class="prof ${on?'on':''}">
+      <div class="field"><label class="label" for="n-${k}">${FORCED?'שם':'פרופיל '+(i+1)}</label><input id="n-${k}" data-name="${k}" maxlength="20" autocomplete="off" placeholder="${i&&!FORCED?'השם של החבר':'השם שלך'}" value="${esc(prof.names[k])}"></div>
+      <button class="btn ${on||FORCED?'':'ghost'}" type="button" data-pick="${k}">${FORCED?'שמור':LINKS?'פתח':on?'פעיל':'בחר'}</button>
+    </div>`; }).join('')}
+  </section>`;
+  $view.querySelectorAll('[data-name]').forEach(inp=>inp.oninput=()=>{ prof.names[inp.dataset.name]=inp.value.trim(); saveProf(); });
+  $view.querySelectorAll('[data-pick]').forEach(b=>b.onclick=async()=>{
+    if(LINKS){ saveProf(); location.href='./'+b.dataset.pick.slice(1)+'/'; return; }
+    prof.active=b.dataset.pick; saveProf(); state.loading=true;
+    try{ await local.reload(); }catch{}
+    if(current()==='profile') location.hash='#home';
+  });
+}
+
+/* ---------- progress ---------- */
+function chartSVG(s){
+  const W=340,H=190,L=10,Rr=26,T=12,B=26;
+  const n=s.length, x=i=> n===1 ? (L+W-Rr)/2 : L+(i/(n-1))*(W-Rr-L);
+  const y=v=> T+(10-v)/9*(H-T-B);
+  let grid='';
+  [1,4,7,10].forEach(v=>{ grid+=`<line x1="${L}" x2="${W-Rr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${W-Rr+8}" y="${y(v)+4}" font-size="11" fill="var(--muted)">${v}</text>`; });
+  const ma=s.map((_,i)=>{ const w=s.slice(Math.max(0,i-2),i+1); return w.reduce((a,c)=>a+c.score,0)/w.length; });
+  const line=s.map((c,i)=>`${i?'L':'M'}${x(i)} ${y(c.score)}`).join(' ');
+  const area= n>1 ? `${line} L${x(n-1)} ${H-B} L${x(0)} ${H-B} Z` : '';
+  const maLine= n>2 ? `<path d="${ma.map((v,i)=>`${i?'L':'M'}${x(i)} ${y(v)}`).join(' ')}" stroke="var(--muted)" stroke-width="2" fill="none" stroke-dasharray="5 5"/>` : '';
+  const dots=s.map((c,i)=>`<circle cx="${x(i)}" cy="${y(c.score)}" r="${i===n-1?6:4}" fill="${i===n-1?'#ffffff':'#0c0d12'}" stroke="${i===n-1?'#bfe0ff':'#aebccd'}" stroke-width="2.5"><title>${fmtDate(c.date)}: ${c.score}</title></circle>`).join('');
+  const short=i=>esc(fmtDate(s[i].date).replace(/ \d{4}$/,''));
+  const labels= n===1 ? `<text x="${x(0)}" y="${H-6}" font-size="11" text-anchor="middle" fill="var(--muted)">${short(0)}</text>`
+    : `<text x="${L}" y="${H-6}" font-size="11" text-anchor="start" fill="var(--muted)">${short(0)}</text><text x="${W-Rr}" y="${H-6}" font-size="11" text-anchor="end" fill="var(--muted)">${short(n-1)}</text>`;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" direction="ltr" role="img" aria-label="גרף ציונים לאורך זמן">${grid}
+    <defs><linearGradient id="cg" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#8ea0b8"/><stop offset=".6" stop-color="#dfe9f5"/><stop offset="1" stop-color="#ffffff"/></linearGradient><linearGradient id="ca" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#bfe0ff" stop-opacity=".3"/><stop offset="1" stop-color="#bfe0ff" stop-opacity="0"/></linearGradient></defs>${area?`<path d="${area}" fill="url(#ca)"/>`:''}
+    <path d="${line}" class="ln" stroke="url(#cg)" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round"/>${maLine}${dots}${labels}</svg>`;
+}
+
+function renderProgress(){
+  const {s,n,trend}=stats();
+  if(!n){ $view.innerHTML=`<div class="card empty stack"><h2>עוד אין מה להשוות</h2><p class="muted">אחרי שתי תספורות יופיע כאן גרף של הציונים והשוואה בין הראשונה לאחרונה.</p><a class="btn" href="#new">הוסף תספורת</a></div>`; return; }
+  const withPhoto=s.filter(c=>(c.photos||[]).some(Boolean));
+  const best=s.reduce((a,c)=>c.score>a.score?c:a,s[0]);
+  const a=withPhoto[0], b=withPhoto[withPhoto.length-1];
+  const pick=(c)=>(c.photos||[]).find(Boolean);
+  const mins=s.filter(c=>c.minutes);
+  $view.innerHTML=`
+    <section class="card stack" style="gap:10px">
+      <div class="row between"><h2>ציון לאורך זמן</h2>${trend?`<span class="trend ${trend.diff>0.25?'up':trend.diff<-0.25?'down':'flat'} num" dir="ltr">${trend.diff>0?'+':''}${trend.diff.toFixed(1)}</span>`:''}</div>
+      ${chartSVG(s)}
+      <div class="row legend"><span><svg width="18" height="6"><line x1="0" x2="18" y1="3" y2="3" stroke="#dfe9f5" stroke-width="3"/></svg>ציון</span>${n>2?`<span><svg width="18" height="6"><line x1="0" x2="18" y1="3" y2="3" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 4"/></svg>ממוצע 3 אחרונות</span>`:''}</div>
+    </section>
+    ${a&&b&&a!==b?`<section class="card stack" style="gap:12px"><h2>אז ועכשיו</h2>
+      <div class="compare">
+        <figure><img src="${esc(photoSrc(pick(a)))}" alt="התספורת הראשונה" data-zoom="${esc(photoSrc(pick(a)))}"><figcaption><span>${fmtDate(a.date)}</span><b class="num">${a.score}/10</b></figcaption></figure>
+        <figure><img src="${esc(photoSrc(pick(b)))}" alt="התספורת האחרונה" data-zoom="${esc(photoSrc(pick(b)))}"><figcaption><span>${fmtDate(b.date)}</span><b class="num">${b.score}/10</b></figcaption></figure>
+      </div></section>`:''}
+    <div class="card row between"><div><div class="label">התספורת הכי טובה</div><div>${fmtDate(best.date)}</div></div><span class="pill" style="background:${scoreColor(best.score)}">${best.score}/10</span></div>
+    ${mins.length>=2?`<div class="card row between"><div class="label">משך תספורת</div><div class="num">${mins[0].minutes} דק׳ בהתחלה, ${mins[mins.length-1].minutes} דק׳ עכשיו</div></div>`:''}`;
+  bindZoom();
+}
+
+/* ---------- history ---------- */
+function renderHistory(){
+  const s=sorted().reverse();
+  if(!s.length){ $view.innerHTML=`<div class="card empty stack"><h2>ההיסטוריה ריקה</h2><p class="muted">כל תספורת שתשמור תופיע כאן עם התמונות וההערות שלה.</p><a class="btn" href="#new">הוסף תספורת</a></div>`; return; }
+  $view.innerHTML=s.map(c=>{
+    const ph=(c.photos||[]).filter(Boolean);
+    return `<article class="card cut">
+      ${thumb(c)}
+      <div class="body">
+        <div class="row between" style="flex-wrap:nowrap"><b>${fmtDate(c.date)}</b><span class="pill" style="background:${scoreColor(c.score)}">${c.score}/10</span></div>
+        ${c.minutes?`<span class="muted num" style="font-size:.9rem">${c.minutes} דקות</span>`:''}
+        ${c.notes?`<p>${esc(c.notes)}</p>`:''}
+        ${ph.length>1?`<div class="more">${ph.slice(1).map(p=>`<img src="${esc(photoSrc(p))}" alt="" data-zoom="${esc(photoSrc(p))}" loading="lazy">`).join('')}</div>`:''}
+        ${pendingDelete===c.id
+          ? `<div class="confirm"><span>למחוק את התספורת ואת התמונות שלה?</span><button class="btn danger" data-del="${esc(c.id)}">מחק</button><button class="btn ghost" data-cancel>ביטול</button></div>`
+          : `<button class="linkbtn" data-ask="${esc(c.id)}">מחק</button>`}
+      </div></article>`;}).join('');
+  bindZoom();
+  $view.querySelectorAll('[data-ask]').forEach(b=>b.onclick=()=>{ pendingDelete=b.dataset.ask; renderHistory(); });
+  $view.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=()=>{ pendingDelete=null; renderHistory(); });
+  $view.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{
+    const c=state.cuts.find(x=>x.id===b.dataset.del); b.disabled=true; b.textContent='מוחק…';
+    try{ await state.backend.remove(c); pendingDelete=null; }catch{ b.disabled=false; b.textContent='מחק'; }
+  });
+}
+
+function zoom(src){
+  const d=document.createElement('div'); d.className='lb'; d.tabIndex=-1;
+  d.innerHTML=`<img src="${esc(src)}" alt="">`;
+  d.onclick=()=>d.remove(); d.onkeydown=e=>{ if(e.key==='Escape') d.remove(); };
+  document.body.appendChild(d); d.focus();
+}
+(async function boot(){
+  render();
+  let cloud=null;
+  try{ cloud = await initCloud(); }catch{ cloud=null; }
+  if(cloud){ state.backend=cloud; cloud.subscribe(); }
+  else{
+    state.backend=local; updateWho();
+    try{ await local.init(); }
+    catch(e){ state.loading=false; state.error='הדפדפן לא מאפשר לשמור נתונים כאן. נסה לפתוח בחלון רגיל ולא בגלישה פרטית.'; }
+  }
+  render();
+})();
+</script>
+</body>
+</html>

@@ -9,6 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>html{padding-top:env(safe-area-inset-top,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<script>window.PROFILE_LINKS=true</script>
 </head>
 <body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -183,6 +184,10 @@ try{ document.getElementById('today').textContent=new Date().toLocaleDateString(
 const PKEY='self-barber-profile';
 let prof={active:null,names:{p1:'',p2:''}};
 try{ const v=JSON.parse(localStorage.getItem(PKEY)); if(v&&v.names) prof={active:v.active||null,names:{p1:v.names.p1||'',p2:v.names.p2||''}}; }catch{}
+// On the website each person has their own link (…/1/ or …/2/); the link decides the profile.
+const FORCED=(location.pathname.match(/\/([12])\/(?:index\.html)?$/)||[])[1]||null;
+if(FORCED) prof.active='p'+FORCED;
+const LINKS=!!window.PROFILE_LINKS&&!FORCED;
 function saveProf(){ try{ localStorage.setItem(PKEY,JSON.stringify(prof)); }catch{} updateWho(); }
 function updateWho(){
   const w=document.getElementById('who'); if(!w) return;
@@ -326,7 +331,7 @@ window.addEventListener('hashchange',()=>{ render(); window.scrollTo(0,0); });
 function render(){
   const v=current();
   document.querySelectorAll('nav.tabs a').forEach(a=>{ if(a.dataset.v===v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
-  if(state.backend===local && !state.error && (v==='profile' || !prof.active)) return renderProfile();
+  if(state.backend===local && !state.error && (v==='profile' || !prof.active || LINKS)) return renderProfile();
   if(v==='profile'){ location.hash='#home'; return; }
   if(v==='new') return renderNew();
   if(state.loading){ $view.innerHTML='<div class="card empty muted">טוען את התספורות שלך…</div>'; return; }
@@ -470,15 +475,17 @@ async function save(){
 
 /* ---------- profiles ---------- */
 function renderProfile(){
-  $view.innerHTML=`<section class="card stack"><h2>מי מסתפר?</h2>
-    <p class="muted">לכל פרופיל יש תספורות וחיסכון משלו. הכול נשמר רק בטלפון הזה.</p>
-    ${['p1','p2'].map((k,i)=>`<div class="prof ${prof.active===k?'on':''}">
-      <div class="field"><label class="label" for="n-${k}">פרופיל ${i+1}</label><input id="n-${k}" data-name="${k}" maxlength="20" autocomplete="off" placeholder="${i?'השם של החבר':'השם שלך'}" value="${esc(prof.names[k])}"></div>
-      <button class="btn ${prof.active===k?'':'ghost'}" type="button" data-pick="${k}">${prof.active===k?'פעיל':'בחר'}</button>
-    </div>`).join('')}
+  const keys=FORCED?['p'+FORCED]:['p1','p2'];
+  $view.innerHTML=`<section class="card stack"><h2>${FORCED?'השם שלך':'מי מסתפר?'}</h2>
+    <p class="muted">${FORCED?'התספורות והחיסכון שלך נשמרים רק בטלפון הזה.':LINKS?'לכל אחד יש קישור משלו. בחר פרופיל, ושמור את הקישור שנפתח במסך הבית של הטלפון.':'לכל פרופיל יש תספורות וחיסכון משלו. הכול נשמר רק בטלפון הזה.'}</p>
+    ${keys.map(k=>{ const i=k==='p1'?0:1, on=prof.active===k&&!LINKS; return `<div class="prof ${on?'on':''}">
+      <div class="field"><label class="label" for="n-${k}">${FORCED?'שם':'פרופיל '+(i+1)}</label><input id="n-${k}" data-name="${k}" maxlength="20" autocomplete="off" placeholder="${i&&!FORCED?'השם של החבר':'השם שלך'}" value="${esc(prof.names[k])}"></div>
+      <button class="btn ${on||FORCED?'':'ghost'}" type="button" data-pick="${k}">${FORCED?'שמור':LINKS?'פתח':on?'פעיל':'בחר'}</button>
+    </div>`; }).join('')}
   </section>`;
   $view.querySelectorAll('[data-name]').forEach(inp=>inp.oninput=()=>{ prof.names[inp.dataset.name]=inp.value.trim(); saveProf(); });
   $view.querySelectorAll('[data-pick]').forEach(b=>b.onclick=async()=>{
+    if(LINKS){ saveProf(); location.href='./'+b.dataset.pick.slice(1)+'/'; return; }
     prof.active=b.dataset.pick; saveProf(); state.loading=true;
     try{ await local.reload(); }catch{}
     if(current()==='profile') location.hash='#home';
