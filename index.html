@@ -8,6 +8,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="הספר של עצמי">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <style>html{padding-top:env(safe-area-inset-top,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <script>window.PROFILE_LINKS=true</script>
 </head>
@@ -53,9 +56,13 @@ button{cursor:pointer}
 .label{font-size:.85rem;color:var(--muted);font-weight:500}
 .mode{font-size:.85rem;background:var(--fill);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:14px}
 
-.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
-.top>div{flex:none;max-width:100%}
-.top h1{white-space:nowrap}
+.top{display:flex;flex-direction:column;gap:4px}
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:38px}
+.top-row .label{min-width:0}
+.guide ol{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+.guide li::marker{font-weight:800;color:var(--ice)}
+.guide b{color:#fff}
+.quiet{background:none;border:0;color:var(--muted);padding:4px 0;font-size:.9rem;text-decoration:underline}
 .who{flex:0 1 auto;min-width:0;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--fill);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:.9rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
 .who span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .who svg{width:18px;height:18px;flex:none}
@@ -144,8 +151,9 @@ nav.tabs a[aria-current="page"] svg{filter:drop-shadow(0 0 8px rgba(190,220,255,
 
 <div class="app" dir="rtl">
   <header class="top">
-    <div><div class="label" id="today"></div><h1>הספר של עצמי</h1></div>
-    <a id="who" class="who" href="#profile" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.500 2 8 6"/></svg><span id="who-name"></span></a>
+    <div class="top-row"><div class="label" id="today"></div>
+    <a id="who" class="who" href="#profile" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.500 2 8 6"/></svg><span id="who-name"></span></a></div>
+    <h1 id="hello">הספר של עצמי</h1>
   </header>
   <div id="mode" class="mode" hidden></div>
   <main id="view" class="stack" style="margin-top:16px"></main>
@@ -176,7 +184,7 @@ function shekel(n){ return n.toLocaleString('he-IL'); }
 function scoreColor(s){ return s>=8?'var(--good)':s>=5?'var(--warn)':'var(--bad)'; }
 function photoSrc(p){ return p ? (p.id ? '/_blob/'+p.id : p.data) : ''; }
 function sorted(){ return [...state.cuts].sort((a,b)=> (a.date||'').localeCompare(b.date||'') || (a.createdAt||0)-(b.createdAt||0)); }
-try{ document.getElementById('today').textContent=new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'}); }catch{}
+try{ document.getElementById('today').textContent='הספר של עצמי · '+new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'}); }catch{}
 
 /* ---------- storage ---------- */
 // Cloud: db (private per person) + assets for photos. Fallback: this browser only.
@@ -189,10 +197,22 @@ const FORCED=(location.pathname.match(/\/([12])\/(?:index\.html)?$/)||[])[1]||nu
 if(FORCED) prof.active='p'+FORCED;
 const LINKS=!!window.PROFILE_LINKS&&!FORCED;
 function saveProf(){ try{ localStorage.setItem(PKEY,JSON.stringify(prof)); }catch{} updateWho(); }
+const SITE=!!window.PROFILE_LINKS;
+const DEF={p1:'שלמה',p2:'ניתאי'};
+function profName(k){ return prof.names[k]||DEF[k]; }
+function lsGet(k){ try{ return localStorage.getItem(k); }catch{ return null; } }
+function lsSet(k,v){ try{ v===null?localStorage.removeItem(k):localStorage.setItem(k,v); }catch{} }
+function updateHello(){
+  const h=new Date().getHours();
+  const g= h<5?'לילה טוב': h<12?'בוקר טוב': h<17?'צהריים טובים': h<21?'ערב טוב':'לילה טוב';
+  const named = state.backend===local && prof.active && !LINKS;
+  document.getElementById('hello').textContent = named ? g+', '+profName(prof.active) : (state.backend===local ? 'הספר של עצמי' : g);
+}
 function updateWho(){
+  updateHello();
   const w=document.getElementById('who'); if(!w) return;
   w.hidden = state.backend!==local;
-  document.getElementById('who-name').textContent = prof.active ? (prof.names[prof.active]||('פרופיל '+(prof.active==='p1'?1:2))) : 'פרופיל';
+  document.getElementById('who-name').textContent = prof.active&&!LINKS ? profName(prof.active) : 'פרופיל';
 }
 // On-device storage (IndexedDB): photos are kept as image blobs on this phone only.
 const local = {
@@ -206,7 +226,7 @@ const local = {
     state.cuts=(all||[]).filter(c=>c.profile===prof.active).map(c=>({...c,photos:(c.photos||[]).map(p=>{ if(!p||!p.blob) return null; const u=URL.createObjectURL(p.blob); this.urls.push(u); return {data:u}; })}));
     state.loading=false; state.error=''; render();
   },
-  async add(cut){ cut.id='c'+Date.now(); cut.profile=prof.active; await this.tx('readwrite',st=>st.put(cut)); await this.reload(); },
+  async add(cut){ cut.id='c'+Date.now(); cut.profile=prof.active; await this.tx('readwrite',st=>st.put(cut)); try{ navigator.storage&&navigator.storage.persist&&navigator.storage.persist(); }catch{} await this.reload(); },
   async remove(cut){ await this.tx('readwrite',st=>st.delete(cut.id)); await this.reload(); },
   async uploadPhoto(file){ return { blob: await compress(file,1400,.85) }; }
 };
@@ -330,6 +350,7 @@ window.addEventListener('hashchange',()=>{ render(); window.scrollTo(0,0); });
 
 function render(){
   const v=current();
+  updateHello();
   document.querySelectorAll('nav.tabs a').forEach(a=>{ if(a.dataset.v===v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
   if(state.backend===local && !state.error && (v==='profile' || !prof.active || LINKS)) return renderProfile();
   if(v==='profile'){ location.hash='#home'; return; }
@@ -385,6 +406,7 @@ function renderHome(){
       <div class="bar" role="img" aria-label="${shekel(total)} מתוך ${shekel(top)} שקלים"><i data-w="${(Math.min(1,total/top)*100).toFixed(1)}"></i></div>
       <div class="ring-foot num">${n? `${n} תספורות × ${PRICE} ₪ · עוד <b>${left}</b> ליעד של ${shekel(top)} ₪` : `כל תספורת בבית מוסיפה ${PRICE} ₪`}</div>
     </section>
+    ${guideHTML()}
     <div class="stats">
       <div class="card stat"><b class="num">${n}</b><span>תספורות</span></div>
       <div class="card stat"><b class="num">${n?avg.toFixed(1):'–'}</b><span>ציון ממוצע</span></div>
@@ -398,7 +420,7 @@ function renderHome(){
       : `<section class="card empty stack"><h2>עוד אין תספורות</h2><p class="muted">צלם את התספורת מקדימה, מהצד ומאחורה ותן לה ציון. כל פעם תראה כמה השתפרת.</p><a class="btn" href="#new">הוסף תספורת ראשונה</a></section>`}
   `;
   requestAnimationFrame(()=>requestAnimationFrame(()=>{ const p=$view.querySelector('.bar i'); if(p) p.style.width=p.dataset.w+'%'; }));
-  bindZoom(); mountPole(Math.min(1,total/top));
+  bindZoom(); bindGuide(); mountPole(Math.min(1,total/top));
 }
 function thumb(c){
   const p=(c.photos||[]).find(Boolean);
@@ -473,16 +495,44 @@ async function save(){
   }
 }
 
+/* ---------- add to home screen ---------- */
+const GUIDE_OFF='self-barber-guide-off';
+let installEvt=null;
+function installed(){ return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone===true; }
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); installEvt=e; if(current()==='home'&&!state.loading) render(); });
+window.addEventListener('appinstalled',()=>{ installEvt=null; lsSet(GUIDE_OFF,'1'); if(current()==='home') render(); });
+function guideHTML(){
+  if(!SITE||!FORCED||installed()||lsGet(GUIDE_OFF)) return '';
+  const ios = FORCED!=='2' && /iPhone|iPad|iPod/.test(navigator.userAgent);
+  const steps = ios
+    ? ['פתח את הקישור הזה ב-<b>Safari</b>.','לחץ על כפתור <b>השיתוף</b> בתחתית המסך (ריבוע עם חץ למעלה).','גלול למטה ובחר <b>"הוסף למסך הבית"</b>.','לחץ <b>"הוסף"</b>. הלוגו יופיע במסך הבית.']
+    : ['פתח את הקישור הזה ב-<b>Chrome</b>.','לחץ על <b>שלוש הנקודות ⋮</b> בפינה למעלה.','בחר <b>"הוספה למסך הבית"</b>. בחלק מהטלפונים כתוב <b>"התקנת האפליקציה"</b>.','לחץ <b>"התקנה"</b> או <b>"הוספה"</b>. הלוגו יופיע במסך הבית.'];
+  return `<section class="card stack guide" aria-label="הוספה למסך הבית">
+    <div class="row between"><h2>להוסיף למסך הבית${ios?'':' באנדרואיד'}</h2><button class="quiet" type="button" data-guide-off>הסתר</button></div>
+    <p class="muted">אחרי ההוספה האפליקציה נפתחת מהמסך הראשי עם לוגו משלה, וגם בלי אינטרנט.</p>
+    ${installEvt?'<button class="btn wide" type="button" data-install>התקן עכשיו</button><p class="muted">אם הכפתור לא עובד:</p>':''}
+    <ol>${steps.map(t=>`<li>${t}</li>`).join('')}</ol>
+  </section>`;
+}
+function bindGuide(){
+  const off=$view.querySelector('[data-guide-off]'); if(off) off.onclick=()=>{ lsSet(GUIDE_OFF,'1'); render(); };
+  const ins=$view.querySelector('[data-install]'); if(ins) ins.onclick=async()=>{ const e=installEvt; if(!e) return; installEvt=null; try{ await e.prompt(); }catch{} render(); };
+}
+// Offline: the site's service worker keeps the app available without a connection.
+if(SITE && 'serviceWorker' in navigator){ navigator.serviceWorker.register((FORCED?'../':'./')+'sw.js').catch(()=>{}); }
+
 /* ---------- profiles ---------- */
 function renderProfile(){
   const keys=FORCED?['p'+FORCED]:['p1','p2'];
   $view.innerHTML=`<section class="card stack"><h2>${FORCED?'השם שלך':'מי מסתפר?'}</h2>
     <p class="muted">${FORCED?'התספורות והחיסכון שלך נשמרים רק בטלפון הזה.':LINKS?'לכל אחד יש קישור משלו. בחר פרופיל, ושמור את הקישור שנפתח במסך הבית של הטלפון.':'לכל פרופיל יש תספורות וחיסכון משלו. הכול נשמר רק בטלפון הזה.'}</p>
     ${keys.map(k=>{ const i=k==='p1'?0:1, on=prof.active===k&&!LINKS; return `<div class="prof ${on?'on':''}">
-      <div class="field"><label class="label" for="n-${k}">${FORCED?'שם':'פרופיל '+(i+1)}</label><input id="n-${k}" data-name="${k}" maxlength="20" autocomplete="off" placeholder="${i&&!FORCED?'השם של החבר':'השם שלך'}" value="${esc(prof.names[k])}"></div>
+      <div class="field"><label class="label" for="n-${k}">${FORCED?'שם':'הקישור של'}</label><input id="n-${k}" data-name="${k}" maxlength="20" autocomplete="off" placeholder="${DEF[k]}" value="${esc(prof.names[k])}"></div>
       <button class="btn ${on||FORCED?'':'ghost'}" type="button" data-pick="${k}">${FORCED?'שמור':LINKS?'פתח':on?'פעיל':'בחר'}</button>
     </div>`; }).join('')}
+    ${SITE&&FORCED&&!installed()?'<button class="quiet" type="button" data-guide-on>איך מוסיפים למסך הבית</button>':''}
   </section>`;
+  const go=$view.querySelector('[data-guide-on]'); if(go) go.onclick=()=>{ lsSet(GUIDE_OFF,null); location.hash='#home'; };
   $view.querySelectorAll('[data-name]').forEach(inp=>inp.oninput=()=>{ prof.names[inp.dataset.name]=inp.value.trim(); saveProf(); });
   $view.querySelectorAll('[data-pick]').forEach(b=>b.onclick=async()=>{
     if(LINKS){ saveProf(); location.href='./'+b.dataset.pick.slice(1)+'/'; return; }
